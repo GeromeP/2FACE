@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="VoiceRecognizer.MainPage"
+    x:Class="Chess.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -11,7 +11,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" >
+    shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -20,16 +20,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!--TitlePanel contient le nom de l'application et le titre de la page-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="VOICE RECOGNITION" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-            <TextBlock Text="speech to text" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="MON APPLICATION" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
+            <TextBlock Text="nom de la page" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
-        
-        <StackPanel Grid.Row="1">
-            <Button Content="Lire" Click="ear" Name="btnLire"></Button>
-            <TextBlock Text="" Name="txtResult"></TextBlock>
-        </StackPanel>
-        
+
+        <!--ContentPanel - placez tout contenu supplémentaire ici-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel>
+                <TextBlock Name="txtPlateau" Text="TEST"/>
+                <TextBox Name="saisie"></TextBox>
+                <Button Name="changeposition" Click="move" Content="Test"></Button>
+                <TextBlock Name="erreur"></TextBlock>
+            </StackPanel>
+            
+        </Grid>
     </Grid>
 
 </phone:PhoneApplicationPage>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<grammar version="1.0" xml:lang="fr-fr" root="mediaMenu" tag-format="semantics/1.0" 
+         xmlns="http://www.w3.org/2001/06/grammar" 
+         xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions">
+
+  <!--Exemple de grammaire SRGS utilisée pour afficher la syntaxe.
+      L'élément rule définit une règle de grammaire. Un élément rule 
+      contient du texte ou des éléments XML qui définissent ce que les locuteurs peuvent 
+      dire, ainsi que l'ordre dans lequel ils peuvent le dire.-->
+
+  <rule id="genres" scope="public">
+    <one-of>
+      <item> Blues </item>
+      <item> Classique </item>
+      <item> Gospel </item>
+      <item> Jazz </item>
+      <item> Rock </item>
+    </one-of>
+  </rule>
+
+  <rule id="mediaMenu" scope="public">
+    Rechercher
+
+    <!--Utilisez l'élément item devant contenir une extension de règle lorsqu'il est nécessaire de rendre cette dernière
+        facultative ou répétable (en d'autres termes, lorsque l'attribut repeat doit être utilisé).
+        L'attribut repeat sur l'élément item indique que les mots dans l'élément peuvent être
+        prononcés zéro ou une fois, ce qui les rend facultatifs-->
+    <one-of>
+      <item> albums </item>
+      <item> artistes </item>
+    </one-of>
+
+    <item repeat="0-1"> dans </item>
+    <!--L'élément ruleref spécifie une référence de la règle conteneur à une autre règle, qu'elle figure dans la 
+        même grammaire ou une grammaire 	externe. La règle référencée définit la saisie utilisateur qui doit 
+        correspondre pour une reconnaissance réussie de la règle conteneur. Cet élément est particulièrement utile pour
+        réutiliser des règles et des grammaires dont le contenu change rarement, telles qu'une liste 
+        de villes ou une règle de reconnaissance des numéros de téléphone.-->
+    <ruleref uri="#genres"/>
+
+    <item repeat="0-1"> catégorie </item>
+
+  </rule>
+  
+  
+</grammar>

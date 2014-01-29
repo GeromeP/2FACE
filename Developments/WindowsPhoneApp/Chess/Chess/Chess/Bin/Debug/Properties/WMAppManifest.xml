@@ -1,34 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="fr-FR" />
-  <App xmlns="" ProductID="{c192418e-4b61-4deb-9dd6-d9823c34a503}" Title="VoiceRecognizer" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="VoiceRecognizer author" Description="Sample description" Publisher="VoiceRecognizer" PublisherID="{9c3f915d-60bb-4a6e-9b68-9503bbd71b77}">
+  <App xmlns="" ProductID="{2732e082-78a2-4ab4-91c3-33a279952baa}" Title="Chess" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Chess author" Description="Sample description" Publisher="Chess" PublisherID="{a7531c53-36e3-44cc-8269-09ddb6adf518}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
       <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
-      <Capability Name="ID_CAP_MICROPHONE" />
-      <Capability Name="ID_CAP_SPEECH_RECOGNITION" />
+      <Capability Name="ID_CAP_SENSORS" />
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
     </Tasks>
     <Tokens>
-      <PrimaryToken TokenID="VoiceRecognizerToken" TaskName="_default">
+      <PrimaryToken TokenID="ChessToken" TaskName="_default">
         <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>VoiceRecognizer</Title>
-          <BackContent>
-          </BackContent>
-          <BackBackgroundImageURI>
-          </BackBackgroundImageURI>
-          <BackTitle>
-          </BackTitle>
-          <DeviceLockImageURI>
-          </DeviceLockImageURI>
-          <HasLarge>
-          </HasLarge>
+          <Title>Chess</Title>
+          <BackContent></BackContent>
+          <BackBackgroundImageURI></BackBackgroundImageURI>
+          <BackTitle></BackTitle>
+          <DeviceLockImageURI></DeviceLockImageURI>
+          <HasLarge></HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>
@@ -39,3 +35,4 @@
     </ScreenResolutions>
   </App>
 </Deployment>
+<!-- WPSDK Version 8.0.9900 -->

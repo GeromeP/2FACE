@@ -8,34 +8,95 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using VoiceRecognizer.Resources;
+using Windows.Phone.Speech;
+using Windows.Phone.Speech.Synthesis;
+using Windows.Phone.Speech.Recognition;
+using Windows.Foundation;
 
 namespace VoiceRecognizer
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        // Constructeur
+        SpeechSynthesizer synthetizer;
+        SpeechRecognizer recognizer;
+
+        IAsyncOperation<SpeechRecognitionResult> recoOperation;
+
+        bool inProgress = false;
+
+        string[] color = { "rouge", "bleu", "vert" };
+       
         public MainPage()
         {
             InitializeComponent();
-
-            // Exemple de code pour la localisation d'ApplicationBar
-            //BuildLocalizedApplicationBar();
         }
 
-        // Exemple de code pour la conception d'une ApplicationBar localisée
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Définit l'ApplicationBar de la page sur une nouvelle instance d'ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if(synthetizer == null)
+                synthetizer = new SpeechSynthesizer();
+            if (recognizer == null)
+            {
+                recognizer = new SpeechRecognizer();
+                recognizer.Grammars.AddGrammarFromList("myColorList", color);
+            }
 
-        //    // Crée un bouton et définit la valeur du texte sur la chaîne localisée issue d'AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
+            base.OnNavigatedTo(e);
+        }
 
-        //    // Crée un nouvel élément de menu avec la chaîne localisée d'AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
+        private async void ear(object sender, RoutedEventArgs e)
+        {
+            if (inProgress)
+            {
+                inProgress = false;
+                btnLire.Content = "Commencer la reconnaissance vocale";
+                txtResult.Text = String.Empty;
+
+                if (recoOperation != null && recoOperation.Status == AsyncStatus.Started)
+                    recoOperation.Cancel();
+                return;
+            }
+            else
+            {
+                inProgress = true;
+                btnLire.Content = "Reconnaissance vocal en écoute";
+            }
+
+            while (inProgress)
+            {
+                try
+                {
+                    recoOperation = recognizer.RecognizeAsync();
+                    var recoResult = await recoOperation;
+
+                    if (recoResult.TextConfidence < SpeechRecognitionConfidence.Medium)
+                    {
+                        txtResult.Text = "Je n'ai pas compris ";
+                        await synthetizer.SpeakTextAsync(txtResult.Text);
+                    }
+                    else
+                    {
+                        txtResult.Text = "couleur : " + recoResult.Text;
+                        await synthetizer.SpeakTextAsync(txtResult.Text);
+                    }
+                }
+                catch(System.Threading.Tasks.TaskCanceledException){}
+                catch(Exception err)
+                {
+                    const int privacyPolicyHResult = unchecked((int)0x80045509);
+
+                    if (err.HResult == privacyPolicyHResult)
+                    {
+                        MessageBox.Show("To run this sample, you must first accept the speech privacy policy. To do so, navigate to Settings -> speech on your phone and check 'Enable Speech Recognition Service' ");
+                        inProgress = false;
+                        btnLire.Content = "Commencer la reconnaissance vocale";
+                    }
+                    else
+                    {
+                        txtResult.Text = "Error: " + err.Message;
+                    }
+                }
+            }
+        }
     }
 }

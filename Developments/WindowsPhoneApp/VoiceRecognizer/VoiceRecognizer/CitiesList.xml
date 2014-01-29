@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" root="Main" tag-format="semantics/1.0" version="1.0" xmlns="http://www.w3.org/2001/06/grammar">
+   <!-- Defines an SRGS grammar for choosing a city for  flight departures and destinations. -->
+   <rule id="Main">
+      <item repeat ="0-1"> I want to fly to </item>
+      <ruleref uri="#Cities" />
+   </rule>
+   <rule id="Cities" scope="public">
+      <one-of>
+         <item> Seattle </item>
+         <item> Sao Paulo </item>
+         <item> Rome </item>
+         <item> Tokyo </item>
+         <item> Barcelona </item>
+         <item> Montreal </item>
+         <item> Santiago </item>
+         <item>Paris</item>
+      </one-of>
+   </rule>
+</grammar>
