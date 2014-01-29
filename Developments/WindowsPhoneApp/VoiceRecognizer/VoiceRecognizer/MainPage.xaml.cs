@@ -24,8 +24,6 @@ namespace VoiceRecognizer
 
         bool inProgress = false;
 
-        string[] color = { "rouge", "bleu", "vert" };
-       
         public MainPage()
         {
             InitializeComponent();
@@ -35,10 +33,12 @@ namespace VoiceRecognizer
         {
             if(synthetizer == null)
                 synthetizer = new SpeechSynthesizer();
+
             if (recognizer == null)
             {
+                Uri rule = new Uri("ms-appx:///CitiesList.xml", UriKind.RelativeOrAbsolute);
                 recognizer = new SpeechRecognizer();
-                recognizer.Grammars.AddGrammarFromList("myColorList", color);
+                recognizer.Grammars.AddGrammarFromUri("positionList", rule);
             }
 
             base.OnNavigatedTo(e);
@@ -76,7 +76,7 @@ namespace VoiceRecognizer
                     }
                     else
                     {
-                        txtResult.Text = "couleur : " + recoResult.Text;
+                        txtResult.Text = "position : " + recoResult.Text;
                         await synthetizer.SpeakTextAsync(txtResult.Text);
                     }
                 }
